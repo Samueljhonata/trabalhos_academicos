@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1539227791 source:c:\users\wande\desktop\teste\sudoku.c
+	"sudoku.h"
+
+1539225738 c:\users\wande\desktop\teste\sudoku.h
+	<stdio.h>
+	<stdlib.h>
+
+1539225706 source:c:\users\wande\desktop\teste\main.c
+	<stdio.h>
+	<stdlib.h>
+	"sudoku.h"
+
