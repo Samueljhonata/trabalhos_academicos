@@ -1,0 +1,4 @@
+jdbc:mysql://127.0.0.1:3307/
+loja_roupas
+com.mysql.jdbc.Driver
+root
