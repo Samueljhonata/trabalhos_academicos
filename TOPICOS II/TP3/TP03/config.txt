@@ -1,4 +1,5 @@
 jdbc:mysql://127.0.0.1:3307/
-loja_roupas
+tp03
 com.mysql.jdbc.Driver
 root
+

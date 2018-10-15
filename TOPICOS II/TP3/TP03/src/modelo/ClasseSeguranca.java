@@ -1,12 +1,11 @@
-
 package modelo;
 
 public enum ClasseSeguranca {
-    NAO_CLASSIFICADA(0,"U"),
-    CONFIDENCIAL(1,"C"),
-    SECRETA(2,"S"),
-    ALTAMENTE_SECRETA(3,"AS");
-    
+    NAO_CLASSIFICADA(0, "U"),
+    CONFIDENCIAL(1, "C"),
+    SECRETA(2, "S"),
+    ALTAMENTE_SECRETA(3, "AS");
+
     private int num;
     private String cod;
 
@@ -22,6 +21,19 @@ public enum ClasseSeguranca {
     public String getCod() {
         return cod;
     }
-    
-    
+
+    public static ClasseSeguranca retorna(int num) {
+        switch (num) {
+            case 0:
+                return ClasseSeguranca.NAO_CLASSIFICADA;
+            case 1:
+                return ClasseSeguranca.CONFIDENCIAL;
+            case 2:
+                return ClasseSeguranca.SECRETA;
+            case 3:
+                return ClasseSeguranca.ALTAMENTE_SECRETA;
+        }
+        return null;
+    }
+
 }
