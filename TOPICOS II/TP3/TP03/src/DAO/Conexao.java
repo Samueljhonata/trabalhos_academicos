@@ -4,8 +4,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import utilitarios.Arquivo;
 
@@ -55,7 +53,7 @@ public class Conexao {
                     return con;
                 }
             }
-            System.out.println("Tentando conectar...");
+            System.out.println("Tentando conectar ao banco...");
             if (!configura()) {
                 System.err.println("ERRO ao conectar ao banco");
                 return null;
