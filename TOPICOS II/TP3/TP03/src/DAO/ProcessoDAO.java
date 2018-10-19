@@ -79,7 +79,6 @@ public class ProcessoDAO {
             if(processo == null){
                 sql = "SELECT * FROM " + nomeTabela;
             }
-            System.out.println(sql);
             s = conexao.conectar().createStatement();
             ResultSet result = s.executeQuery(sql);
             System.out.println(sql);
@@ -99,7 +98,6 @@ public class ProcessoDAO {
         ArrayList<Processo> retorno = new ArrayList<Processo>();
         try {
             
-            System.out.println(sql);
             s = conexao.conectar().createStatement();
             ResultSet result = s.executeQuery(sql);
             System.out.println(sql);
@@ -130,7 +128,6 @@ public class ProcessoDAO {
         
         try {
             numProcesso = result.getString("numProcesso");
-            System.out.println(numProcesso);
         } catch (Exception e) {
         }
         try {
@@ -173,12 +170,45 @@ public class ProcessoDAO {
             TC = ClasseSeguranca.retorna(result.getInt("TC"));
         } catch (Exception e) {
         }
-        return new Processo(numProcesso, C_numProcesso, 
-                nomeAutor, C_nomeAutor, 
-                        nomeReu, C_nomeReu, 
-                        descricaoAuto, C_descricaoAuto,
-                        sentenca, C_sentenca,
-                        TC);
-        
+        /*Processo b = new Processo(numProcesso, C_numProcesso, 
+                nomeAutor, C_nomeAutor,
+                nomeReu, C_nomeReu,
+                descricaoAuto, C_descricaoAuto,
+                sentenca, C_sentenca,
+                TC);*/
+        return new Processo(numProcesso, C_numProcesso, nomeAutor, C_nomeAutor, nomeReu, C_nomeReu, descricaoAuto, C_descricaoAuto, sentenca, C_sentenca, TC);
+    }
+
+    public boolean excluiProcesso(String numProcesso, ClasseSeguranca TC) {
+        String sql;
+        try {
+            sql = "DELETE FROM `tp03`.`"+nomeTabela+"` WHERE `"+nomeTabela+"`.`numProcesso` = '"+numProcesso+"' AND `"+nomeTabela+"`.`TC` = "+TC.getNum()+"";
+
+            System.out.println(sql);
+            s = conexao.conectar().createStatement();
+            if(s.executeUpdate(sql) != 0){
+                return true;
+            }
+            
+        } catch (Exception ex) {
+            System.err.println("ERRO EXCLUIR PROCESSO");
+            return false;
+        }
+        return false;
+    }
+    
+    public boolean excluiProcesso(String sql) {
+        try {
+            System.out.println(sql);
+            s = conexao.conectar().createStatement();
+            if(s.executeUpdate(sql) != 0){
+                return true;
+            }
+            
+        } catch (Exception ex) {
+            System.err.println("ERRO EXCLUIR PROCESSO");
+            return false;
+        }
+        return false;
     }
 }

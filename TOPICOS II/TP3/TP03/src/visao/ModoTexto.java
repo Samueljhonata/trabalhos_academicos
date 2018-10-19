@@ -1,5 +1,6 @@
 package visao;
 
+import controle.ControlaComandos;
 import controle.ControlaProcesso;
 import controle.ControlaUsuario;
 import java.util.Scanner;
@@ -10,7 +11,7 @@ public class ModoTexto {
     public static void main(String[] args) {
         Scanner teclado = new Scanner(System.in);
         ControlaUsuario controlaUsuario = new ControlaUsuario();
-        ControlaProcesso controlaProcesso = new ControlaProcesso();
+        ControlaComandos controlaComandos = new ControlaComandos();
         Usuario usuario;
         String user, senha, comando;
 
@@ -35,7 +36,7 @@ public class ModoTexto {
         while(true){
             System.out.print("\n->");
             comando = teclado.nextLine();
-            controlaProcesso.recebeComandos(comando, usuario);
+            controlaComandos.recebeComandos(comando, usuario);
         }
     }
 

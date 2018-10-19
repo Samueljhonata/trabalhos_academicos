@@ -22,13 +22,36 @@ public class ControlaProcesso {
         return processoDAO.atualizaProcesso(processo);
     }
     
+    public boolean excluiProcesso(Processo processo){
+        return processoDAO.excluiProcesso(processo.getNumProcesso(), processo.getTC());
+    }
+    
+    public boolean excluiProcesso(String sql, Usuario usuario){
+        return processoDAO.excluiProcesso(montaExclusao(sql, usuario.getClasseSeguranca()));
+    }
+    
+    private String montaExclusao(String sql, ClasseSeguranca classeSeguranca){
+        sql = sql + " AND `C_numProcesso` <= "+classeSeguranca.getNum()
+                +" AND `C_nomeAutor` <= "+classeSeguranca.getNum()
+                +" AND `C_nomeReu` <= "+classeSeguranca.getNum()
+                +" AND `C_descricaoAuto` <= "+classeSeguranca.getNum()
+                +" AND `C_sentenca` <= "+classeSeguranca.getNum()
+                +" AND `TC` <= "+classeSeguranca.getNum()+"";
+        
+        return sql;
+    }
+
+    //pesquisa atraves de comando
     public ArrayList<Processo> pesquisaProcessos(String sql, Usuario usuario){
-        sql = montaWhere(sql, usuario.getClasseSeguranca());
+        
         ArrayList<Processo> processos = processoDAO.pesquisaProcessos(sql);
         
         System.out.println("Pesquisa = " + sql);
+        if (processos == null) {
+            return null;
+        }
         for (Processo p : processos) {
-            //System.out.println("Original: " + p.mostraProcesso());
+//            System.out.println("Original: " + p.mostraProcesso());
             p = mascara(p, usuario.getClasseSeguranca());
         }
         return processos;
@@ -43,7 +66,7 @@ public class ControlaProcesso {
         return processos;
     }
     
-    
+    //encapsula os campos que o usuário não deve ter acesso
     private Processo mascara(Processo processo, ClasseSeguranca classeSeguranca){
         if (processo == null) {
             return null;
@@ -78,36 +101,10 @@ public class ControlaProcesso {
     }
     
     
-    private String montaWhere(String pesquisa, ClasseSeguranca classeSeguranca){
-        //pesquisa = "SELECT * FROM `processo` WHERE `numProcesso` = 1";
-        String retorno = pesquisa;
-        String[] quebra = pesquisa.split("WHERE");
-        String where;
-        if (quebra.length > 1) {
-            where = quebra[1];
-            where = where.replaceAll("numProcesso", " C_numProcesso <= "+ classeSeguranca.getNum() +" AND numProcesso");
-            where = where.replaceAll("nomeAutor", " C_nomeAutor <= "+ classeSeguranca.getNum() +" AND nomeAutor");
-            where = where.replaceAll("nomeReu", " C_nomeReu <= "+ classeSeguranca.getNum() +" AND nomeReu");
-            where = where.replaceAll("descricaoAuto", " C_descricaoAuto <= "+ classeSeguranca.getNum() +" AND descricaoAuto");
-            where = where.replaceAll("sentenca", " C_sentenca <= "+ classeSeguranca.getNum() +" AND sentenca");
-            System.out.println(where);
-            
-            retorno = quebra[0] + " WHERE " + where;
-        }
-        
-        return retorno;
-    }
     
     /*private String pesquisaNumProcesso(){
         return "`numProcesso` LIKE '1' " + " AND `C_numProcesso` = 1";
     }*/
     
-    public void recebeComandos(String sql, Usuario usuario){
-        if (sql.contains("SELECT")) {
-            ArrayList<Processo> a = this.pesquisaProcessos(sql, usuario);
-            for (Processo processo : a) {
-                System.out.println(processo.mostraProcesso());
-            }
-        }
-    }
+    
 }

@@ -138,19 +138,19 @@ public class Processo {
     private void verificaTC(){
         //verifica se a classe de segurança da tupla deve ser alterada
         int max = 0;
-        if (this.C_numProcesso.getNum() > max) {
+        if (this.C_numProcesso!=null && this.C_numProcesso.getNum() > max) {
             max = this.C_numProcesso.getNum();
         }
-        if (this.C_nomeAutor.getNum() > max) {
+        if (this.C_nomeAutor!=null && this.C_nomeAutor.getNum() > max) {
             max = this.C_nomeAutor.getNum();
         }
-        if (this.C_nomeReu.getNum() > max) {
+        if (this.C_nomeReu!=null && this.C_nomeReu.getNum() > max) {
             max = this.C_nomeReu.getNum();
         }
-        if (this.C_descricaoAuto.getNum() > max) {
+        if (this.C_descricaoAuto!=null && this.C_descricaoAuto.getNum() > max) {
             max = this.C_descricaoAuto.getNum();
         }
-        if (this.C_sentenca.getNum() > max) {
+        if (this.C_sentenca!=null && this.C_sentenca.getNum() > max) {
             max = this.C_sentenca.getNum();
         }
         
@@ -161,7 +161,7 @@ public class Processo {
         String retorno = "";
         
         
-        retorno = "\n---------------------------------------------------------------------\n";
+        retorno = "---------------------------------------------------------------------\n";
         if (C_numProcesso != null) {
             retorno += "No. Processo: " + numProcesso + "(" + C_numProcesso.getCod() + ")\n";
         }
