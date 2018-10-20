@@ -1,6 +1,8 @@
 
 package modelo;
 
+import java.util.Objects;
+
 public class Processo {
     private String numProcesso;
     private ClasseSeguranca C_numProcesso;
@@ -191,6 +193,35 @@ public class Processo {
                 + "  " + sentenca + "(" + C_sentenca.getCod() + ")\t|"
                 + "TC: " + TC + "\t|"
                 +"\n----------------------------------------------------------------------------------------";
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 53 * hash + Objects.hashCode(this.numProcesso);
+        hash = 53 * hash + Objects.hashCode(this.TC);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Processo other = (Processo) obj;
+        if (!Objects.equals(this.numProcesso, other.numProcesso)) {
+            return false;
+        }
+        /*if (this.TC != other.TC) {
+            return false;
+        }*/
+        return true;
     }
     
     

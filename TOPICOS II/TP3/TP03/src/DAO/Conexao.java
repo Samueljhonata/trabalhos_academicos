@@ -26,7 +26,7 @@ public class Conexao {
             ArrayList<String> texto = arq.lerArquivo("config.txt");
 
             for (int i = 0; i < texto.size(); i++) {
-                System.out.println(texto.get(i));
+                //System.out.println(texto.get(i));
             }
 
             url = texto.get(0);
@@ -53,7 +53,7 @@ public class Conexao {
                     return con;
                 }
             }
-            System.out.println("Tentando conectar ao banco...");
+            //System.out.println("Tentando conectar ao banco...");
             if (!configura()) {
                 System.err.println("ERRO ao conectar ao banco");
                 return null;
@@ -61,7 +61,7 @@ public class Conexao {
 
             Class.forName(driver);
             con = DriverManager.getConnection(url, user, password);
-            System.out.println("Conectado!");
+            //System.out.println("Conectado!");
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
             System.out.println("Não foi possível encontrar o Driver!");

@@ -13,34 +13,30 @@ public class teste {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        ControlaProcesso controlaProcesso=new ControlaProcesso();
-        //Processo p = controlaProcesso.pesquisaProcessos(null, new Usuario(null, nul, ClasseSeguranca.SECRETA)).get(0);
-//        if (p != null) {
-//            System.out.println(p.getTC());
-//            //p.setNomeReu("Jose");
-//            p.setC_nomeReu(ClasseSeguranca.CONFIDENCIAL);
-//            controlaProcesso.atualizaProcesso(p);
-//            System.out.println(p.getTC());
-//        }
-        //controlaProcesso.insereProcesso(new Processo(100, ClasseSeguranca.CONFIDENCIAL, "nome", ClasseSeguranca.CONFIDENCIAL, "nR", ClasseSeguranca.SECRETA, "des", ClasseSeguranca.SECRETA, "sentenca", ClasseSeguranca.ALTAMENTE_SECRETA));
-        /*ArrayList<Processo> a = controlaProcesso.pesquisaProcessos(null);
-        for (Processo processo : a) {
-        System.out.println(processo.getNumProcesso());
-        }*/
-        
-        
-        /*Processo p1 = null;
-        ArrayList<Processo> p = controlaProcesso.pesquisaProcessos(p1, new Usuario(null, null, ClasseSeguranca.SECRETA));
-        for (Processo processo : p) {
-            System.out.println(processo.mostraProcesso());
-        }*/
-        
-        String sql = "SELECT * FROM processo";
-        ArrayList<Processo> p = controlaProcesso.pesquisaProcessos(sql, new Usuario(sql, null, ClasseSeguranca.NAO_CLASSIFICADA));
-        for (Processo processo : p) {
-            System.out.println(processo.mostraProcessoF());
+    public int compare(Processo o1, Processo o2) {
+        if (o1.getNumProcesso().compareTo(o2.getNumProcesso()) < 0){
+            return -1;
         }
+        if (o1.getNumProcesso().compareTo(o2.getNumProcesso()) > 0){
+            return 1;
+        }
+        
+        if (o1.getTC().getNum() > o2.getTC().getNum()) {
+            return -1;
+        }
+        return 1;
+    }
+    
+    public static void main(String[] args) {
+        Processo p1 = new Processo("0", ClasseSeguranca.CONFIDENCIAL, null, ClasseSeguranca.CONFIDENCIAL, null, ClasseSeguranca.CONFIDENCIAL, null, ClasseSeguranca.CONFIDENCIAL, null, ClasseSeguranca.CONFIDENCIAL);
+        Processo p2 = new Processo("0", ClasseSeguranca.SECRETA, null, ClasseSeguranca.CONFIDENCIAL, null, ClasseSeguranca.CONFIDENCIAL, null, ClasseSeguranca.CONFIDENCIAL, null, ClasseSeguranca.CONFIDENCIAL);
+        Processo p3 = new Processo("0", ClasseSeguranca.ALTAMENTE_SECRETA, null, ClasseSeguranca.CONFIDENCIAL, null, ClasseSeguranca.CONFIDENCIAL, null, ClasseSeguranca.CONFIDENCIAL, null, ClasseSeguranca.CONFIDENCIAL);
+        
+        ArrayList<Processo> l = new ArrayList<>();
+        l.add(p1);
+        l.add(p2);
+        l.add(p3);
+        
     }
     
 }

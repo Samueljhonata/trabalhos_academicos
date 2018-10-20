@@ -15,7 +15,15 @@ public class ControlaComandos {
     
     
     public void recebeComandos(String sql, Usuario usuario) {
-        if (sql.contains("SELECT")) {
+        String comando = sql.split(" ")[0].toUpperCase();
+        if(comando.equals("INSERT")){
+            sql = montaInsercao(sql, usuario.getClasseSeguranca());
+            if(!controlaProcesso.insereProcesso(sql)){
+                System.out.println("-- ERRO AO EXECUTAR COMANDO!");
+            }
+        }
+        
+        if (comando.contains("SELECT")) {
             sql = montaWhere(sql, usuario.getClasseSeguranca());
             sql = montaSelect(sql);
             
@@ -50,6 +58,17 @@ public class ControlaComandos {
         
     }
     
+    private String montaExclusao(String sql, ClasseSeguranca classeSeguranca){
+        sql = sql /*+ " AND `C_numProcesso` <= "+classeSeguranca.getNum()
+                +" AND `C_nomeAutor` <= "+classeSeguranca.getNum()
+                +" AND `C_nomeReu` <= "+classeSeguranca.getNum()
+                +" AND `C_descricaoAuto` <= "+classeSeguranca.getNum()
+                +" AND `C_sentenca` <= "+classeSeguranca.getNum()*/
+                +" AND `TC` <= "+classeSeguranca.getNum()+"";
+        
+        return sql;
+    }
+    
     //monta a cláusula where da pesquisa inserindo os atributos de segurança, de acordo com a classe do usuario
     private String montaWhere(String pesquisa, ClasseSeguranca classeSeguranca){
         //pesquisa = "SELECT * FROM `processo` WHERE `numProcesso` = 1";
@@ -73,4 +92,40 @@ public class ControlaComandos {
         return retorno;
     }
     
+    private String montaInsercao(String sql, ClasseSeguranca classeSeguranca){
+        sql = sql.replaceAll("\\);","");
+        String[] a = sql.split("\\(");
+        String[] quebra = a[1].split(",");
+        String retorno = "INSERT INTO processo VALUES(";
+        if (classeSeguranca == ClasseSeguranca.NAO_CLASSIFICADA) {
+            retorno = retorno + quebra[0] + ", " + 0 + ", "; //numProcesso
+            retorno = retorno + quebra[1] + ", " + 0 + ", "; //nomeAutor
+            retorno = retorno + quebra[2] + ", " + 0 + ", "; //nomeReu
+            retorno = retorno + quebra[3] + ", " + 0 + ", "; //descricaoAuto
+            retorno = retorno + quebra[4] + ", " + 0 + ", "; //sentenca
+            retorno = retorno + " 0);";
+        } else if (classeSeguranca == ClasseSeguranca.CONFIDENCIAL) {
+            retorno = retorno + quebra[0] + ", " + 0 + ", "; //numProcesso
+            retorno = retorno + quebra[1] + ", " + 1 + ", "; //nomeAutor
+            retorno = retorno + quebra[2] + ", " + 1 + ", "; //nomeReu
+            retorno = retorno + quebra[3] + ", " + 1 + ", "; //descricaoAuto
+            retorno = retorno + quebra[4] + ", " + 1 + ", "; //sentenca
+            retorno = retorno + " 1);";
+        } else if (classeSeguranca == ClasseSeguranca.SECRETA) {
+            retorno = retorno + quebra[0] + ", " + 0 + ", "; //numProcesso
+            retorno = retorno + quebra[1] + ", " + 1 + ", "; //nomeAutor
+            retorno = retorno + quebra[2] + ", " + 1 + ", "; //nomeReu
+            retorno = retorno + quebra[3] + ", " + 2 + ", "; //descricaoAuto
+            retorno = retorno + quebra[4] + ", " + 2 + ", "; //sentenca
+            retorno = retorno + " 2);";
+        }else if (classeSeguranca == ClasseSeguranca.ALTAMENTE_SECRETA) {
+            retorno = retorno + quebra[0] + ", " + 0 + ", "; //numProcesso
+            retorno = retorno + quebra[1] + ", " + 1 + ", "; //nomeAutor
+            retorno = retorno + quebra[2] + ", " + 1 + ", "; //nomeReu
+            retorno = retorno + quebra[3] + ", " + 2 + ", "; //descricaoAuto
+            retorno = retorno + quebra[4] + ", " + 3 + ", "; //sentenca
+            retorno = retorno + " 3);";
+        }
+        return retorno;
+    }
 }

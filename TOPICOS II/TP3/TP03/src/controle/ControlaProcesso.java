@@ -3,12 +3,30 @@ package controle;
 
 import DAO.ProcessoDAO;
 import java.util.ArrayList;
+import java.util.Comparator;
 import modelo.ClasseSeguranca;
 import modelo.Processo;
 import modelo.Usuario;
 
 public class ControlaProcesso {
     private ProcessoDAO processoDAO;
+    private ArrayList<Processo> listaProcessos;
+    
+    class ComparadorDeTimes implements Comparator<Processo> {
+    public int compare(Processo o1, Processo o2) {
+        if (o1.getNumProcesso().compareTo(o2.getNumProcesso()) < 0){
+            return -1;
+        }
+        if (o1.getNumProcesso().compareTo(o2.getNumProcesso()) > 0){
+            return 1;
+        }
+        
+        if (o1.getTC().getNum() > o2.getTC().getNum()) {
+            return 1;
+        }
+        return -1;
+    }
+}
 
     public ControlaProcesso() {
         processoDAO = new ProcessoDAO();
@@ -18,52 +36,103 @@ public class ControlaProcesso {
         return processoDAO.insereProcesso(processo);
     }
     
+    public boolean insereProcesso(String sql){
+        return processoDAO.executaSQL(sql);
+    }
+    
+    
+    
     public boolean atualizaProcesso(Processo processo){
         return processoDAO.atualizaProcesso(processo);
     }
     
     public boolean excluiProcesso(Processo processo){
-        return processoDAO.excluiProcesso(processo.getNumProcesso(), processo.getTC());
+        return processoDAO.excluiProcesso(processo, processo.getTC());
     }
     
-    public boolean excluiProcesso(String sql, Usuario usuario){
-        return processoDAO.excluiProcesso(montaExclusao(sql, usuario.getClasseSeguranca()));
-    }
+    /*public boolean excluiProcesso(String sql, Usuario usuario){
+        return processoDAO.excluiProcesso(sql, usuario.getClasseSeguranca()));
+    }*/
     
-    private String montaExclusao(String sql, ClasseSeguranca classeSeguranca){
-        sql = sql + " AND `C_numProcesso` <= "+classeSeguranca.getNum()
-                +" AND `C_nomeAutor` <= "+classeSeguranca.getNum()
-                +" AND `C_nomeReu` <= "+classeSeguranca.getNum()
-                +" AND `C_descricaoAuto` <= "+classeSeguranca.getNum()
-                +" AND `C_sentenca` <= "+classeSeguranca.getNum()
-                +" AND `TC` <= "+classeSeguranca.getNum()+"";
-        
-        return sql;
-    }
 
     //pesquisa atraves de comando
     public ArrayList<Processo> pesquisaProcessos(String sql, Usuario usuario){
-        
+        ArrayList<Processo> retorno = new ArrayList<Processo>();
         ArrayList<Processo> processos = processoDAO.pesquisaProcessos(sql);
         
         System.out.println("Pesquisa = " + sql);
         if (processos == null) {
             return null;
         }
+        listaProcessos = new ArrayList<Processo>();
         for (Processo p : processos) {
-//            System.out.println("Original: " + p.mostraProcesso());
-            p = mascara(p, usuario.getClasseSeguranca());
+            confereNivel(p, usuario.getClasseSeguranca());
         }
-        return processos;
+        for (Processo p : listaProcessos) {
+//            System.out.println("Original: " + p.mostraProcesso());
+            retorno.add(mascara(p, usuario.getClasseSeguranca()));
+        }
+        return retorno;
     }
     
-    public ArrayList<Processo> pesquisaProcessos(Processo processo, Usuario usuario){
+    /*public ArrayList<Processo> pesquisaProcessos(Processo processo, Usuario usuario){
         ArrayList<Processo> processos = processoDAO.pesquisaProcessos(processo);
         for (Processo p : processos) {
             //System.out.println("Original: " + p.mostraProcesso());
             p = mascara(p, usuario.getClasseSeguranca());
         }
         return processos;
+    }*/
+    
+    private void confereNivel(Processo processo, ClasseSeguranca classeSeguranca){
+        ArrayList<Processo> temp = new ArrayList<Processo>();
+        int qtdPresente = 0;
+        if (processo == null) {
+            return;
+        }
+        System.out.println("\nCONFERINDO: " + processo.getNumProcesso() + " - " + processo.getTC());
+        //confere se nao tera processos repetidos com classe de segurança maior que a do usuário
+        if (!listaProcessos.contains(processo)) { //se ainda não tinha um processo igual ao atual na lista
+            System.out.println("NOVO!");
+            listaProcessos.add(processo);
+        }else{ //se ja tinha um processo igual ao atual na lista
+            System.out.println("JA TINHA");
+            if (processo.getTC().getNum() <= classeSeguranca.getNum()) { //se a classe do atual é menor que a classe do usuario
+                listaProcessos.add(processo);
+                qtdPresente++;
+            }
+            for (Processo p : listaProcessos) { //percorre procurando processos que sejam iguais ao atual
+                if (p.getNumProcesso().equals(processo.getNumProcesso())){ //numProcesso igual
+                    if(p.getTC().getNum() > classeSeguranca.getNum() && qtdPresente >0){ //classe de segurança maior
+                        //listaProcessos.remove(p);
+                        temp.add(p);
+                        System.out.println("REMOVE");
+                    }else{ //classe de segurança menor
+                        qtdPresente++;
+                        System.out.println("NAO REMOVE ");
+                    }
+                }
+            }
+            System.out.println("qtdPresente=" + qtdPresente);
+            
+            for (Processo processo1 : temp) {
+                qtdPresente--;
+                System.out.println("removendo ... " + processo1.getTC());
+                listaProcessos.remove(processo1);
+            }
+            
+            if (qtdPresente == 0 && listaProcessos.size() > 0) {
+                System.out.println("ENTROU");
+                ComparadorDeTimes comparadorDeTimes = new ComparadorDeTimes();
+                temp.sort(comparadorDeTimes);
+                System.out.println("COMPARANDO");
+                for (Processo processo1 : temp) {
+                    System.out.println(processo1.getNumProcesso() + " - " + processo1.getTC());
+                }
+                listaProcessos.add(temp.get(0));
+            }
+        }
+
     }
     
     //encapsula os campos que o usuário não deve ter acesso
