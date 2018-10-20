@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1540004293 source:c:\users\wande\desktop\backtraking\main.c
+	<stdio.h>
+	<stdlib.h>
+	"sudoku.h"
+
+1539225738 c:\users\wande\desktop\backtraking\sudoku.h
+	<stdio.h>
+	<stdlib.h>
+
+1540004965 source:c:\users\wande\desktop\backtraking\sudoku.c
+	"sudoku.h"
+
+1540005887 source:c:\users\wande\desktop\backtraking\quadro.c
+	"sudoku.h"
+
