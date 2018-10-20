@@ -10,27 +10,27 @@ E se nenhum número (1 a 9) leva a uma solução, retornamos falso.*/
 #include "sudoku.h"
 
 int main() {
-    /*Quadro para achar a solução.*/
-	int quadro[N][N] = {{0, 0, 6, 5, 0, 8, 4, 0, 0},
-                      {5, 2, 0, 0, 0, 0, 0, 0, 0},
-                      {0, 8, 7, 0, 0, 0, 0, 3, 1},
-                      {0, 0, 3, 0, 1, 0, 0, 8, 0},
-                      {9, 0, 0, 8, 6, 3, 0, 0, 5},
-                      {0, 5, 0, 0, 9, 0, 6, 0, 0},
-                      {1, 3, 0, 0, 0, 0, 2, 5, 0},
-                      {0, 0, 0, 0, 0, 0, 0, 7, 4},
-                      {0, 0, 5, 2, 0, 6, 3, 0, 0}};
+    int escolha;
 
-    printf("SUDOKU INICIO\n");
-    exibe_Quadro(quadro);
-    /*Recebe 1 se há solucao e 0 se não*/
-	if (resolucao(quadro)) {
-        printf("\nSUDOKU RESOLVIDO\n");
-		exibe_Quadro(quadro);
-	} else {
-		printf("\nNão há solucao!\n");
-        exibe_Quadro(quadro);
-	}
+    /*Menu de opções juntamente com a entrada do usuário com a opção de jogo.*/
+    do{
+        menu();
+        scanf("%d",&escolha);
+
+        switch(escolha){
+            case 1:
+                break;
+            case 2: quadro_Resolver();
+                break;
+        }
+
+    }while(escolha!=0);
 
 	return 0;
+}
+void menu(){//Menu de opções
+    printf("*********************************************\n");
+    printf("\t\t->Bem Vindo aos jogos!<-\n");
+    printf("\t\t\t1-Caça Palavras \n \t\t\t2-SUDOKU\n \t\t\t0-Sair");
+    printf("\n*********************************************\n");
 }
