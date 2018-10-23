@@ -14,3 +14,29 @@
 1540005887 source:c:\users\wande\desktop\backtraking\quadro.c
 	"sudoku.h"
 
+1540254940 source:c:\users\wande\onedrive\documents\faculdade\paa\trabalhos\backtraking\main.c
+	<stdio.h>
+	<stdlib.h>
+	"sudoku.h"
+	<locale.h>
+
+1540247987 c:\users\wande\onedrive\documents\faculdade\paa\trabalhos\backtraking\sudoku.h
+	<stdio.h>
+	<stdlib.h>
+
+1540254879 source:c:\users\wande\onedrive\documents\faculdade\paa\trabalhos\backtraking\quadro.c
+	"sudoku.h"
+	"quadro.h"
+
+1540237525 c:\users\wande\onedrive\documents\faculdade\paa\trabalhos\backtraking\quadro.h
+
+1540254879 source:c:\users\wande\onedrive\documents\faculdade\paa\trabalhos\backtraking\sudoku.c
+	"sudoku.h"
+
+1540222098 source:c:\users\wande\onedrive\documents\faculdade\paa\trabalhos\backtraking\aloc_matriz.c
+	"aloc_matriz.h"
+	<stdio.h>
+	<stdlib.h>
+
+1540222009 c:\users\wande\onedrive\documents\faculdade\paa\trabalhos\backtraking\aloc_matriz.h
+

@@ -1,33 +1,27 @@
 #include "sudoku.h"
-int quadro_Resolver(){
+#include "quadro.h"
+
+int quadro_Resolver(int **quadro,int tam,int *tentativa,int *recursao){
     int temp;
-    /*Quadro para achar a solução.*/
-	int quadro[N][N] = {{0, 0, 6, 5, 0, 8, 4, 0, 0},
-                      {5, 2, 0, 0, 0, 0, 0, 0, 0},
-                      {0, 8, 7, 0, 0, 0, 0, 3, 1},
-                      {0, 0, 3, 0, 1, 0, 0, 8, 0},
-                      {9, 0, 0, 8, 6, 3, 0, 0, 5},
-                      {0, 5, 0, 0, 9, 0, 6, 0, 0},
-                      {1, 3, 0, 0, 0, 0, 2, 5, 0},
-                      {0, 0, 0, 0, 0, 0, 0, 7, 4},
-                      {0, 0, 5, 2, 0, 6, 3, 0, 0}};
 
     printf("\n-------------QUADRO INICIAL-----------\n");
+    exibe_Quadro(quadro,tam);
 
-    exibe_Quadro(quadro);
-
-    resultado(resolucao(quadro),quadro);
+    temp = resolucao(quadro,tam,tentativa,recursao);
+    resultado(temp,quadro,tam,tentativa,recursao);
 
 }
 
 /*Função que decide o resultado*/
-int resultado(int resulta,int quadro[N][N]){
+void resultado(int resulta,int **quadro,int tam, int *tentativa,int *recursao){
     /*Recebe 1 se há solucao e 0 se não*/
 	if (resulta) {
         printf("\n---------------SUDOKU RESOLVIDO-----------\n");
-		exibe_Quadro(quadro);
+
+		exibe_Quadro(quadro,tam);
 	} else {
 		printf("\n------------Não há solucao!----------------\n");
-        exibe_Quadro(quadro);
+
+        exibe_Quadro(quadro,tam);
 	}
 }

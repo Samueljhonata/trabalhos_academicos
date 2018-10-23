@@ -3,16 +3,17 @@
 #define N 9
 #define BRANCO 0
 
-int resolucao(int quadro[N][N]);
+int resolucao(int **quadro,int tam, int *tentativa,int *recursao);
 
-void exibe_Quadro(int quadro[N][N]);
+void exibe_Quadro(int **quadro,int tam);
 
-int verifica_Linha(int quadro[N][N], int row, int num);
+int verifica_Linha(int **quadro,int tam, int linha,int num);
 
-int verifica_Coluna(int quadro[N][N], int col, int num);
+int verifica_Coluna(int **quadro,int tam, int coluna,int num);
 
-int verifica_Caixa(int quadro[N][N], int Linha_Inicial, int Coluna_Inicial, int num);
+int verifica_Caixa(int **quadro, int Linha_Inicial, int Coluna_Inicial,int tam);
 
-int salva_possibilidade(int quadro[N][N], int linha, int coluna, int num);
+int salva_possibilidade(int **quadro,int tam, int linha, int coluna,int num);
 
-int localizacao(int quadro[N][N], int *linha, int *coluna);
+int localizacao(int **quadro,int tam, int *linha, int *coluna);
+
