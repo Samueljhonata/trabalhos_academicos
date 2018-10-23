@@ -1,11 +1,8 @@
 #include <string.h>
-
 #include "caca_palavras.h"
-
 
 //https://programacaodescomplicada.wordpress.com/2012/11/09/aula-64-alocacao-dinamica-pt-6-alocacao-de-matrizes/
 //Adaptado
-
 char** alocarMatriz(int Linhas, int Colunas) { //Recebe a quantidade de Linhas e Colunas como Parâmetro
 
     char i, j; //Variáveis Auxiliares
@@ -50,7 +47,6 @@ int carregaArquivo(char *nomeArq, Tabuleiro *retorno) {
                     numColunas[cont] = '\0';
                     retorno->qtdLinhas = stringToInt(numLinhas);
                     retorno->qtdColunas = stringToInt(numColunas);
-                    //printf("\n%d %d\n",*qtdLinhas, *qtdColunas);
                 } else {
                     if (ch != ' ') {
                         if (atual == 0) {
@@ -69,7 +65,6 @@ int carregaArquivo(char *nomeArq, Tabuleiro *retorno) {
             } else { //depois de pegar qtd de linhas e colunas
                 if (i == 1) { //aloca a matriz uma vez
                     retorno->tabuleiro = alocarMatriz(retorno->qtdLinhas, retorno->qtdColunas);
-                    //printf("\nalocado\n");
                     i = 2;
                 }
 
@@ -77,7 +72,6 @@ int carregaArquivo(char *nomeArq, Tabuleiro *retorno) {
                     l++;
                     c = 0;
                 } else { //pegando os caracteres
-                    //printf("\n[%d][%d] = %c", l, c, ch);
 
                     retorno->tabuleiro[l][c] = ch;
                     c++;
@@ -92,7 +86,6 @@ int carregaArquivo(char *nomeArq, Tabuleiro *retorno) {
 
 void copiaTabuleiro(Tabuleiro *original, Tabuleiro *copia) {
     int i, j;
-    //printf("\n%d %d\n", original->qtdLinhas, original->qtdColunas);
     copia->tabuleiro = alocarMatriz(original->qtdLinhas, original->qtdColunas);
     copia->qtdLinhas = original->qtdLinhas;
     copia->qtdColunas = original->qtdColunas;
@@ -105,7 +98,6 @@ void copiaTabuleiro(Tabuleiro *original, Tabuleiro *copia) {
 
 void tabuleiroZerado(Tabuleiro *tabuleiro, int qtdLinhas, int qtdColunas) {
     int i, j;
-    //printf("\n%d %d\n", original->qtdLinhas, original->qtdColunas);
     tabuleiro->tabuleiro = alocarMatriz(qtdLinhas, qtdColunas);
     tabuleiro->qtdLinhas = qtdLinhas;
     tabuleiro->qtdColunas = qtdColunas;
@@ -116,7 +108,7 @@ void tabuleiroZerado(Tabuleiro *tabuleiro, int qtdLinhas, int qtdColunas) {
     }
 }
 
-void mostraTabuleiro(Tabuleiro *tabuleiro) {
+void mostraTabuleiro(Tabuleiro *tabuleiro) { //imprime o tabuleiro na tela
     int i, j;
     printf("\n Tamanho: n%dx%d\n", tabuleiro->qtdLinhas, tabuleiro->qtdColunas);
     printf(" ");
@@ -139,7 +131,7 @@ void mostraTabuleiro(Tabuleiro *tabuleiro) {
 
     printf(" ");
     for (i = 0; i <= tabuleiro->qtdColunas; i++) {
-        printf("TT");
+        printf("__");
     }
 }
 
@@ -166,7 +158,6 @@ int confereDentro(Posicao *p, int qtdLinhas, int qtdColunas){
     return (p->linha >= qtdLinhas || p->linha < 0 || p->coluna >= qtdColunas || p->coluna < 0);
 }
 
-
 TipoItem montaItem(Posicao posicaoAtual, int tipoMovimento) {
     TipoItem tItem;
     tItem.movimento = tipoMovimento;
@@ -175,21 +166,17 @@ TipoItem montaItem(Posicao posicaoAtual, int tipoMovimento) {
     return tItem;
 }
 
-void cacaPalavraRecursivo(Tabuleiro *tabuleiro, char *palavra, int letraAtual, Posicao posicaoAtual, int movimentoAnterior, TipoPilha *pilha, int *qtdPalavras, int *contaChamadas) {
+void cacaPalavraRecursivo(Tabuleiro *tabuleiro, char *palavra, int letraAtual, Posicao posicaoAtual, int movimentoAnterior, TipoPilha *pilha, int *qtdPalavras, int *contaChamadas) { //resolve o caça palavras a partir de uma posição inicial
     Posicao p;
     TipoItem tItem;
     (*contaChamadas)++;
-    //printf("\nOlhando %d %d", posicaoAtual.linha, posicaoAtual.coluna);
 
     if (confereDentro(&posicaoAtual, tabuleiro->qtdLinhas, tabuleiro->qtdLinhas) || letraAtual >= strlen(palavra)){
-        //printf("\nPARADA - SAIU");
         return;
     }
 
     //confere se caractere atual é igual ao da palavra
-    //printf("\nOlhando %c =? %c", tabuleiro->tabuleiro[posicaoAtual.linha][posicaoAtual.coluna], palavra[letraAtual]);
     if (tabuleiro->tabuleiro[posicaoAtual.linha][posicaoAtual.coluna] == palavra[letraAtual]) {
-        //printf("\n---------------------------------------------------CONFERE %d %d", posicaoAtual.linha, posicaoAtual.coluna);
         (letraAtual)++;
         tItem = montaItem(posicaoAtual, BAIXO);
         if (letraAtual == strlen(palavra)) {
@@ -210,25 +197,20 @@ void cacaPalavraRecursivo(Tabuleiro *tabuleiro, char *palavra, int letraAtual, P
 
     if (letraAtual == strlen(palavra)) {
         (*qtdPalavras)++;
-        //printf("\n-----------------------ENCONTROU");
     }
 
     if (movimentoAnterior == INICIO) {
         int aux = *qtdPalavras;
-        //printf("\ninicifeo");
         //movimenta pra esquerda
         p = posiciona(ESQUERDA, posicaoAtual);
-        //printf("\nvai olhar %d %d (esquerda)", p.linha, p.coluna);
         cacaPalavraRecursivo(tabuleiro, palavra, letraAtual, p, ESQUERDA, pilha, qtdPalavras, contaChamadas);
 
         //movimenta pra baixo
         p = posiciona(BAIXO, posicaoAtual);
-        //printf("\nvai olhar %d %d (baixo)", p.linha, p.coluna);
         cacaPalavraRecursivo(tabuleiro, palavra, letraAtual, p, BAIXO, pilha, qtdPalavras, contaChamadas);
         
         //movimenta pra direita
         p = posiciona(DIREITA, posicaoAtual);
-        //printf("\nvai olhar %d %d (direita)", p.linha, p.coluna);
         cacaPalavraRecursivo(tabuleiro, palavra, letraAtual, p, DIREITA, pilha, qtdPalavras, contaChamadas);
         
         if (*qtdPalavras == aux) { //remove letra inicial sozinha
@@ -237,36 +219,26 @@ void cacaPalavraRecursivo(Tabuleiro *tabuleiro, char *palavra, int letraAtual, P
 
         
     } else if (movimentoAnterior == BAIXO) {
-        //printf("\ntinha olhado pra baixo");
         //movimenta pra esquerda
         p = posiciona(ESQUERDA, posicaoAtual);
-        //printf("\nvai olhar %d %d (esquerda)", p.linha, p.coluna);
         cacaPalavraRecursivo(tabuleiro, palavra, letraAtual, p, ESQUERDA, pilha, qtdPalavras, contaChamadas);
 
         //movimenta pra direita
         p = posiciona(DIREITA, posicaoAtual);
-        //printf("\nvai olhar %d %d (baixo)", p.linha, p.coluna);
         cacaPalavraRecursivo(tabuleiro, palavra, letraAtual, p, DIREITA, pilha, qtdPalavras, contaChamadas);
     } else if (movimentoAnterior == ESQUERDA) {
-        //printf("\ntinha olhado pra esquerda");
         //movimenta pra baixo
         p = posiciona(BAIXO, posicaoAtual);
-        //printf("\nvai olhar %d %d (baixo)", p.linha, p.coluna);
         cacaPalavraRecursivo(tabuleiro, palavra, letraAtual, p, BAIXO, pilha, qtdPalavras, contaChamadas);
 
     } else if (movimentoAnterior == DIREITA) {
-        //printf("\ntinha olhado pra direita");
         //movimenta pra baixo
         p = posiciona(BAIXO, posicaoAtual);
-        //printf("\nvai olhar %d %d (baixo)", p.linha, p.coluna);
         cacaPalavraRecursivo(tabuleiro, palavra, letraAtual, p, BAIXO, pilha, qtdPalavras, contaChamadas);
-
     }
-
-
 }
 
-void cacaPalavra(Tabuleiro *tabuleiro, char *palavra, int modo) {
+void cacaPalavra(Tabuleiro *tabuleiro, char *palavra, int modo) { //faz as configurações iniciais e as chamadas para cada posição inicial
     int letraAtual = 0;
     int qtdPalavras = 0;
     int contaChamadas = 0;
@@ -282,7 +254,6 @@ void cacaPalavra(Tabuleiro *tabuleiro, char *palavra, int modo) {
     //cacaPalavraRecursivo(tabuleiro,palavra,&letraAtual,po)
     int i;
     for (i = 0; i < tabuleiro->qtdLinhas*tabuleiro->qtdColunas; i++) {
-        //printf("\n=========================================================== %d,%d", posicaoAtual.linha, posicaoAtual.coluna);
         cacaPalavraRecursivo(tabuleiro, palavra, letraAtual, posicaoAtual, INICIO, &pilha, &qtdPalavras, &contaChamadas);
         //(posicaoAtual.linha)++;
         (posicaoAtual.coluna)++;
@@ -293,10 +264,6 @@ void cacaPalavra(Tabuleiro *tabuleiro, char *palavra, int modo) {
 
     }
     
-
-    
-
-    //printf("\n\n\n\n");
     tabuleiroZerado(&resolvido, tabuleiro->qtdLinhas, tabuleiro->qtdColunas);
     while (Tamanho(pilha) > 0) {
         Desempilha(&pilha, &tItem);
@@ -309,145 +276,3 @@ void cacaPalavra(Tabuleiro *tabuleiro, char *palavra, int modo) {
 
     mostraTabuleiro(&resolvido);
 }
-/*
-void cacaPalavra(Tabuleiro *tabuleiro, char *palavra) {
-
-    Tabuleiro resolvido;
-    TipoPilha pilha;
-    TipoItem tItem;
-    Posicao posicaoAtual; //marca posição atual
-    int letraAtual = 0; //marca a letra atual q está sendo procurada
-    int cont = 0, testa = 0;
-    copiaTabuleiro(tabuleiro, &resolvido);
-    mostraTabuleiro(tabuleiro);
-
-    FPVazia(&pilha);
-    posicaoAtual.linha = 0;
-    posicaoAtual.coluna = 0;
-    while (cont < 10 && posicaoAtual.linha < resolvido.qtdLinhas && posicaoAtual.coluna < resolvido.qtdColunas) { //percorre todo o tabuleiro
-        printf("\n--- olhando %c\n", resolvido.tabuleiro[posicaoAtual.linha][posicaoAtual.coluna]);
-
-        if (letraAtual == 0) {//anterior errado ou primeiro
-            //confere a letra atual
-            if (resolvido.tabuleiro[posicaoAtual.linha][posicaoAtual.coluna] == palavra[letraAtual]) {// se confere
-                printf("\nconfere");
-                tItem = montaItem(posicaoAtual, BAIXO);
-                Empilha(tItem, &pilha);
-                letraAtual++;
-                posiciona(BAIXO, &posicaoAtual);
-
-
-            } else { //errado
-                printf("\nerrado\n");
-                //resolvido.tabuleiro[posicaoAtual.linha][posicaoAtual.coluna] = '*';
-                if (posicaoAtual.coluna < resolvido.qtdColunas) { //proxima coluna - se houver
-                    printf("proxima coluna\n");
-                    (posicaoAtual.coluna)++;
-                } else if (posicaoAtual.linha < resolvido.qtdLinhas) { //inicio da proxima linha - se houver
-                    (posicaoAtual.linha)++;
-                    posicaoAtual.coluna = 0;
-                    printf("proxima linha\n");
-                } else { //volta pra ultima configuração certa
-
-                }
-
-            }
-        } else {//anterior certo
-            printf("\n" + tItem.movimento);
-
-            while (letraAtual < strlen(palavra)) {
-                printf("\n--- olhando %c\n", resolvido.tabuleiro[posicaoAtual.linha][posicaoAtual.coluna]);
-                //confere a letra atual
-                if (resolvido.tabuleiro[posicaoAtual.linha][posicaoAtual.coluna] == palavra[letraAtual]) {// se confere
-                    switch (tItem.movimento) {
-                        case BAIXO:
-                            printf("\nanterior = abaixo");
-                            tItem = montaItem(posicaoAtual, ESQUERDA);
-                            Empilha(tItem, &pilha);
-                            letraAtual++;
-                            posiciona(ESQUERDA, &posicaoAtual);
-                            break;
-                        case ESQUERDA:
-                            printf("\nanterior = esquerda");
-                            tItem = montaItem(posicaoAtual, DIREITA);
-                            Empilha(tItem, &pilha);
-                            letraAtual++;
-                            posiciona(DIREITA, &posicaoAtual);
-                            break;
-                        case DIREITA:
-                            printf("\nanterior = direita");
-                            tItem = montaItem(posicaoAtual, BAIXO);
-                            Empilha(tItem, &pilha);
-                            letraAtual++;
-                            posiciona(BAIXO, &posicaoAtual);
-                            break;
-                    }
-                    testa = 0;
-                    printf("\nanterior = nenhum");
-
-                } else {
-                    if (testa == 0 || testa >= 3) {
-                        Desempilha(&pilha, &tItem);
-                        posicaoAtual.linha = tItem.posicao.linha;
-                        posicaoAtual.coluna = tItem.posicao.coluna;
-                    }
-                    switch (tItem.movimento) {
-                        case BAIXO:
-                            tItem.movimento = ESQUERDA;
-                            testa++;
-                            break;
-                        case ESQUERDA:
-                            tItem.movimento = DIREITA;
-                            testa++;
-                            break;
-                        case DIREITA:
-                            tItem.movimento = BAIXO;
-                            testa++;
-                            break;
-                    }
-                    letraAtual--;
-                }
-            }
-
-
-            switch (tItem.movimento) {
-                case BAIXO:
-                    printf("\nanterior = abaixo");
-                    tItem = montaItem(posicaoAtual, ESQUERDA);
-                    Empilha(tItem, &pilha);
-                    letraAtual++;
-                    posiciona(ESQUERDA, &posicaoAtual);
-                    break;
-                case ESQUERDA:
-                    printf("\nanterior = esquerda");
-                    break;
-                case DIREITA:
-                    printf("\nanterior = direita");
-                    break;
-            }
-            printf("\nanterior = nenhum");
-
-
-        }
-
-        if (letraAtual == strlen(palavra)) {
-            printf("\n Palavra ENCONTRADA!");
-            Imprime(pilha);
-
-            tabuleiroZerado(&resolvido, tabuleiro->qtdLinhas, tabuleiro->qtdColunas);
-            while (Tamanho(pilha) > 0) {
-                Desempilha(&pilha, &tItem);
-
-                resolvido.tabuleiro[tItem.posicao.linha][tItem.posicao.coluna] = tabuleiro->tabuleiro[tItem.posicao.linha][tItem.posicao.coluna];
-            }
-
-            break;
-        }
-        cont++;
-    }
-
-
-    mostraTabuleiro(&resolvido);
-}
-
- */

@@ -18,7 +18,6 @@ void Empilha(TipoItem x, TipoPilha *Pilha) {
     Aux->Prox = Pilha->Topo;
     Pilha->Topo = Aux;
     Pilha->Tamanho++;
-    //printf("******************************EMPILHOU ");
 }
 
 void Desempilha(TipoPilha *Pilha, TipoItem *Item) {
@@ -32,7 +31,6 @@ void Desempilha(TipoPilha *Pilha, TipoItem *Item) {
     *Item = q->Prox->Item;
     free(q);
     Pilha->Tamanho--;
-    //printf("******************************DESEMPILHOU ");
 }
 
 int Tamanho(TipoPilha Pilha) {

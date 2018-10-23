@@ -1,5 +1,3 @@
-build/Debug/MinGW-Windows/pilha.o: pilha.c pilha.h caca_palavras.h
+build/Debug/MinGW-Windows/pilha.o: pilha.c pilha.h
 
 pilha.h:
-
-caca_palavras.h:

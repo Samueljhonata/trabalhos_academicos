@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "caca_palavras.h"
+//#include "caca_palavras.h"
 
 typedef struct Posicao{
     int linha;
@@ -29,6 +29,14 @@ typedef struct {
     TipoApontador Fundo, Topo;
     int Tamanho;
 } TipoPilha;
+
+void FPVazia(TipoPilha *Pilha);
+int Vazia(TipoPilha Pilha);
+void Empilha(TipoItem x, TipoPilha *Pilha);
+void Desempilha(TipoPilha *Pilha, TipoItem *Item);
+int Tamanho(TipoPilha Pilha);
+void Imprime(TipoPilha Pilha);
+void DesempilhaSobras(TipoPilha *Pilha);
 
 #endif /* PILHA_H */
 
