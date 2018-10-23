@@ -18,6 +18,7 @@ void Empilha(TipoItem x, TipoPilha *Pilha) {
     Aux->Prox = Pilha->Topo;
     Pilha->Topo = Aux;
     Pilha->Tamanho++;
+    //printf("******************************EMPILHOU ");
 }
 
 void Desempilha(TipoPilha *Pilha, TipoItem *Item) {
@@ -31,6 +32,7 @@ void Desempilha(TipoPilha *Pilha, TipoItem *Item) {
     *Item = q->Prox->Item;
     free(q);
     Pilha->Tamanho--;
+    //printf("******************************DESEMPILHOU ");
 }
 
 int Tamanho(TipoPilha Pilha) {
@@ -43,5 +45,18 @@ void Imprime(TipoPilha Pilha)
   while (Aux != NULL) 
     { printf("[%d][%d]\n", Aux->Item.posicao.linha, Aux->Item.posicao.coluna);
       Aux = Aux -> Prox;
+    }
+}
+
+void DesempilhaSobras(TipoPilha *Pilha){ 
+    TipoApontador Aux;
+    TipoItem tItem;
+    Aux = Pilha->Topo->Prox;
+    while (Aux->Item.fim == 0) { 
+        Desempilha(Pilha, &tItem);
+        Aux = Aux->Prox;
+        if(Aux == NULL){
+            break;
+        }
     }
 }

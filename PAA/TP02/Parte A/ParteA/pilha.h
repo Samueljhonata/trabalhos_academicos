@@ -16,6 +16,7 @@ typedef int TipoChave;
 typedef struct {
     int movimento;
     Posicao posicao;
+    int fim;
 } TipoItem;
 typedef struct TipoCelula *TipoApontador;
 

@@ -5,9 +5,13 @@
 //#include <stdlib.h>
 #include "pilha.h"
 
-#define ABAIXO 1
+#define INICIO 0
+#define BAIXO 1
 #define ESQUERDA 2
 #define DIREITA 3
+
+#define NORMAL 1
+#define ANALISE 2
 
 
 typedef struct Tabuleiro{

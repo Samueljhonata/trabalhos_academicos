@@ -1,0 +1,33 @@
+Definições sobre classes de segurança:
+
+-inserção por nível 0:
+numProcesso: 0
+nomeAutor: 0
+nomeReu: 0
+descricaoAuto: 0
+sentenca: 0
+TC: 0
+
+-inserção por nível 1:
+numProcesso: 0
+nomeAutor: 1
+nomeReu: 1
+descricaoAuto: 1
+sentenca: 1
+TC: 1
+
+-inserção por nível 2:
+numProcesso: 0
+nomeAutor: 1
+nomeReu: 1
+descricaoAuto: 2
+sentenca: 2
+TC: 2
+
+-inserção por nível 3:
+numProcesso: 0
+nomeAutor: 1
+nomeReu: 1
+descricaoAuto: 2
+sentenca: 3
+TC: 3
