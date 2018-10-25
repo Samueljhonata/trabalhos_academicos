@@ -41,6 +41,7 @@ public class ProcessoDAO {
         try {
             
             s = conexao.conectar().createStatement();
+            System.out.println(sql);
             ResultSet result = s.executeQuery(sql);
             System.out.println(sql);
 
@@ -118,6 +119,7 @@ public class ProcessoDAO {
                 descricaoAuto, C_descricaoAuto,
                 sentenca, C_sentenca,
                 TC);*/
+        System.out.println(numProcesso+ C_numProcesso+ nomeAutor+ C_nomeAutor+  C_nomeReu+ C_descricaoAuto+C_sentenca+ TC);
         return new Processo(numProcesso, C_numProcesso, nomeAutor, C_nomeAutor, nomeReu, C_nomeReu, descricaoAuto, C_descricaoAuto, sentenca, C_sentenca, TC);
     }
 
@@ -174,7 +176,7 @@ public class ProcessoDAO {
                     + "sentenca = '"+processo.getSentenca()+"', "
                     + "C_sentenca = '"+processo.getC_sentenca().getNum()+"', "
                     + "TC = '"+processo.getTC().getNum()+"' "
-                    + "WHERE `"+nomeTabela+"`.`numProcesso` = '"+processo.getNumProcesso()+"';";
+                    + "WHERE `"+nomeTabela+"`.`numProcesso` = '"+processo.getNumProcesso()+"' AND TC = "+processo.getTC().getNum()+";";
 
             System.out.println(sql);
             s = conexao.conectar().createStatement();

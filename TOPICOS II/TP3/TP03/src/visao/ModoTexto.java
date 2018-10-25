@@ -8,15 +8,31 @@ import modelo.Usuario;
 
 public class ModoTexto {
 
-    
-    private void mostraHelp(){
-        System.out.println("******help********");
-                    System.out.println("help - ajuda");
-                    System.out.println("exit - sair");
-                    System.out.println("reconnect - trocar de usuario");
-                    System.out.println("ou um comando sql valido");
+    //http://www.bosontreinamentos.com.br/mysql/curso-de-mysql-gerenciamento-de-usuarios-do-sistema-criar-consultar-renomear-e-excluir/
+    private void mostraHelp() {
+        System.out.println("* * * * * * * * * * * * * * * * * * * * * * * Ajuda * * * * * * * * * * * * * * * * * *  * * * * *");
+        System.out.println("- Comandos do sistema:");
+        System.out.println(" help - ajuda");
+        System.out.println(" exit - sair");
+        System.out.println(" reconnect - trocar de usuario");
+        System.out.println("- Para controle de usuario:");
+        System.out.println(" CREATE USER <nome_usuario> IDENTIFIED BY <senha> CLASS <sigla_classe_seguranca> - insere usuario");
+        System.out.println(" DROP USER <nome_usuario> - exclui usuario");
+        System.out.println(" SET PASSWORD FOR <nome_usuario> = <senha> - modifica senha do usuario");
+        System.out.println(" SET CLASS FOR <nome_usuario> = <sigla_classe_seguranca> - modifica classe do usuario");
+        System.out.println(" RENAME USER <nome_usuario> = <novo_nome> - renomear usuario");
+        System.out.println("- Comandos SQL válidos:");
+        System.out.println(" SELECT <*,numProcesso,nomeReu,nomeAutor,descricaoAuto,sentenca> FROM processo");
+        System.out.println(" \t<WHERE  <atributo> <operador_logico> <valor> <, <atributo> <operador_logico> <valor>> >");
+        System.out.println(" \t<ORDER BY <nomeAtributo> <ordem>>");
+        System.out.println(" INSERT INTO processo VALUES(<numProcesso>,<nomeReu>,<nomeAutor>,<descricaoAuto>,<sentenca>)");
+        System.out.println(" DELETE FROM processo");
+        System.out.println(" \t<WHERE  <atributo> <operador_logico> <valor> <, <atributo> <operador_logico> <valor>> >");
+        System.out.println(" UPDATE processo SET <atributo> <operador_logico> <valor> <, <atributo> <operador_logico> <valor>>");
+        System.out.println(" \tWHERE numProcesso = <valor>");
+        System.out.println("ou um comando sql valido");
     }
-    
+
     public static void main(String[] args) {
         ModoTexto modoTexto = new ModoTexto();
         Scanner teclado = new Scanner(System.in);
@@ -28,8 +44,8 @@ public class ModoTexto {
         System.out.println("* * * * Sistema Gerenciador de Banco de Dados Locked - SGBD-L * * * *");
 
         //executa
-        while(true){
-            
+        while (true) {
+
             //faz login
             while (true) {
                 System.out.print("User: ");
@@ -47,22 +63,27 @@ public class ModoTexto {
 
             //recebe comandos
             while (true) {
-                System.out.print("\n->");
-                comando = teclado.nextLine();
-                if (comando.equalsIgnoreCase("help")){
-                    modoTexto.mostraHelp();
-                }else if (comando.equalsIgnoreCase("exit")) {
-                    System.out.println("Glória Adeuxx!");
-                    return;
-                }else if(comando.equalsIgnoreCase("reconnect")){
-                    usuario = null;
-                    break;
-                }
-                
-                controlaComandos.recebeComandos(comando, usuario);
+                //try {
+                    System.out.print("\n->");
+                    comando = teclado.nextLine();
+                    if (comando.equalsIgnoreCase("help")) {
+                        modoTexto.mostraHelp();
+                        continue;
+                    } else if (comando.equalsIgnoreCase("exit")) {
+                        System.out.println("Glória Adeuxx!");
+                        return;
+                    } else if (comando.equalsIgnoreCase("reconnect")) {
+                        usuario = null;
+                        break;
+                    }
+
+                    controlaComandos.recebeComandos(comando, usuario);
+                /*} catch (Exception e) {
+
+                }*/
             }
 
         }
-    }
 
+    }
 }

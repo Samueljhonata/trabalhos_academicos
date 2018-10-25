@@ -55,6 +55,24 @@ public class UsuarioDAO {
         return new Usuario(nome, senha, classeSeguranca);
     }
     
+    public boolean atualizaNomeUsuario(String nomeAtual, String novoNome){
+        String sql;
+        try {
+            sql = "UPDATE `"+conexao.getNomeDB()+"`.`"+nomeTabela+"` SET "
+                    + "`user` = '"+novoNome+"' "
+                    + "WHERE `usuariobd`.`user` = '"+nomeAtual+"';";
+
+            System.out.println(sql);
+            s = conexao.conectar().createStatement();
+            s.executeUpdate(sql);
+            
+        } catch (Exception ex) {
+            System.err.println("ERRO CADASTRAR USUARIO");
+            return false;
+        }
+        return true;
+    }
+    
     public ArrayList<Usuario> pesquisaUsuarios(Usuario usuario){
         String sql = "";
         ArrayList<Usuario> retorno = new ArrayList<Usuario>();
@@ -63,6 +81,8 @@ public class UsuarioDAO {
                 sql = "SELECT * FROM " + nomeTabela;
             }else if(usuario.getUser() != null && usuario.getSenha() != null){
                 sql = "SELECT * FROM " + nomeTabela + " WHERE user = '"+usuario.getUser()+"' AND senha = '" + usuario.getSenha() + "'";
+            }else if(usuario.getUser() != null){
+                sql = "SELECT * FROM " + nomeTabela + " WHERE user = '"+usuario.getUser()+"'";
             }
             //System.out.println(sql);
             s = conexao.conectar().createStatement();
@@ -78,6 +98,21 @@ public class UsuarioDAO {
             return null;
         }
         return retorno;
+    }
+    
+    public boolean excluiUsuario(Usuario usuario){
+        String sql;
+        try {
+            sql = "DELETE FROM "+nomeTabela+" WHERE `user` = '"+usuario.getUser()+"'";
+            System.out.println(sql);
+            s = conexao.conectar().createStatement();
+            s.executeUpdate(sql);
+            
+        } catch (Exception ex) {
+            System.err.println("ERRO EXLCUIR USUARIO");
+            return false;
+        }
+        return true;
     }
     
     private Usuario monta(ResultSet result) throws Exception {

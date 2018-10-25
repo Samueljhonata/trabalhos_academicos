@@ -223,6 +223,11 @@ public class Processo {
         }*/
         return true;
     }
+
+    @Override
+    public Processo clone() throws CloneNotSupportedException {
+        return new Processo(numProcesso, C_numProcesso, nomeAutor, C_nomeAutor, nomeReu, C_nomeReu, descricaoAuto, C_descricaoAuto, sentenca, C_sentenca);
+    }
     
     
 }

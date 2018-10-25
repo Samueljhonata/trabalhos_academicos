@@ -35,5 +35,21 @@ public enum ClasseSeguranca {
         }
         return null;
     }
+    
+    public static ClasseSeguranca retorna(String sigla) {
+        sigla = sigla.replaceAll("'", "").replaceAll(";", "").toUpperCase();
+        System.out.println("SIGLA:" + sigla);
+        switch (sigla) {
+            case "U":
+                return ClasseSeguranca.NAO_CLASSIFICADA;
+            case "C":
+                return ClasseSeguranca.CONFIDENCIAL;
+            case "S":
+                return ClasseSeguranca.SECRETA;
+            case "AS":
+                return ClasseSeguranca.ALTAMENTE_SECRETA;
+        }
+        return null;
+    }
 
 }

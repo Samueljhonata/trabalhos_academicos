@@ -27,7 +27,7 @@ public class teste {
         return 1;
     }
     
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         Processo p1 = new Processo("0", ClasseSeguranca.CONFIDENCIAL, null, ClasseSeguranca.CONFIDENCIAL, null, ClasseSeguranca.CONFIDENCIAL, null, ClasseSeguranca.CONFIDENCIAL, null, ClasseSeguranca.CONFIDENCIAL);
         Processo p2 = new Processo("0", ClasseSeguranca.SECRETA, null, ClasseSeguranca.CONFIDENCIAL, null, ClasseSeguranca.CONFIDENCIAL, null, ClasseSeguranca.CONFIDENCIAL, null, ClasseSeguranca.CONFIDENCIAL);
         Processo p3 = new Processo("0", ClasseSeguranca.ALTAMENTE_SECRETA, null, ClasseSeguranca.CONFIDENCIAL, null, ClasseSeguranca.CONFIDENCIAL, null, ClasseSeguranca.CONFIDENCIAL, null, ClasseSeguranca.CONFIDENCIAL);
@@ -37,6 +37,20 @@ public class teste {
         l.add(p2);
         l.add(p3);
         
+    }*/
+    
+    public static void main(String[] args) {
+        String sql = "UPDATE processo SET numProcesso='52', nomeReu='35' WHERE a=5";
+        String quebra = sql.split("SET")[1].split("WHERE")[0];
+            if (quebra.contains("numProcesso")) {
+                String numProcesso = quebra.split("numProcesso")[1].split("'")[1];
+                System.out.println(numProcesso);
+            }
+            
+            if (quebra.contains("nomeReu")) {
+                String nomeReu = quebra.split("nomeReu")[1].split("'")[1];
+                System.out.println(nomeReu);
+            }
     }
     
 }
