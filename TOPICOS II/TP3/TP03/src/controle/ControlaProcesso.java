@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import modelo.ClasseSeguranca;
 import modelo.Processo;
+import modelo.TModo;
 import modelo.Usuario;
 
 public class ControlaProcesso {
@@ -40,7 +41,9 @@ public class ControlaProcesso {
         return processoDAO.executaSQL(sql);
     }
     
-    
+    public boolean excluiPocesso(String sql){
+        return processoDAO.executaSQL(sql);
+    }
     
     public boolean atualizaProcesso(Processo processo){
         return processoDAO.atualizaProcesso(processo);
@@ -64,7 +67,7 @@ public class ControlaProcesso {
     }
     
     //pesquisa atraves de comando
-    public ArrayList<Processo> pesquisaProcessos(String sql, Usuario usuario){
+    public ArrayList<Processo> pesquisaProcessos(String sql, Usuario usuario, TModo modo){
         ArrayList<Processo> retorno = new ArrayList<Processo>();
         ArrayList<Processo> processos = processoDAO.pesquisaProcessos(sql);
         
@@ -74,7 +77,7 @@ public class ControlaProcesso {
         }
         listaProcessos = new ArrayList<Processo>();
         for (Processo p : processos) {
-            confereNivel(p, usuario.getClasseSeguranca());
+            confereNivel(p, usuario.getClasseSeguranca(), modo);
         }
         for (Processo p : listaProcessos) {
 //            System.out.println("Original: " + p.mostraProcesso());
@@ -96,7 +99,7 @@ public class ControlaProcesso {
         return processos;
     }*/
     
-    private void confereNivel(Processo processo, ClasseSeguranca classeSeguranca){
+    private void confereNivel(Processo processo, ClasseSeguranca classeSeguranca, TModo modo){
         ArrayList<Processo> temp = new ArrayList<Processo>();
         int qtdPresente = 0;
         if (processo == null) {
@@ -119,9 +122,13 @@ public class ControlaProcesso {
                         //listaProcessos.remove(p);
                         temp.add(p);
 //                        System.out.println("REMOVE");
-                    }else{ //classe de segurança menor
-                        qtdPresente++;
+                    }else{ //classe de segurança menor ou igual
+                        /*if (modo == TModo.USUAL && p.getTC().getNum() == classeSeguranca.getNum() && qtdPresente >0) {
+                            temp.add(p);
+                        }else{*/
+                            qtdPresente++;
 //                        System.out.println("NAO REMOVE ");
+                        //}
                     }
                 }
             }

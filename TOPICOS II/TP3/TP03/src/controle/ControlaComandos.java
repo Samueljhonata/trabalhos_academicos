@@ -5,6 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.ClasseSeguranca;
 import modelo.Processo;
+import modelo.TModo;
 import modelo.Usuario;
 
 public class ControlaComandos {
@@ -17,9 +18,8 @@ public class ControlaComandos {
         controlaComandosSistema = new ControlaComandosSistema();
     }
 
-    public void recebeComandos(String sql, Usuario usuario) {
+    public void recebeComandos(String sql, Usuario usuario, TModo modo) {
         String comando = sql.split(" ")[0].toUpperCase();
-
         //manipulçação da tabela processo
         if (comando.equalsIgnoreCase("INSERT")) {
             sql = montaInsercao(sql, usuario.getClasseSeguranca());
@@ -33,10 +33,10 @@ public class ControlaComandos {
             sql = montaWhere(sql, usuario.getClasseSeguranca());
             sql = montaSelecao(sql);
 
-            ArrayList<Processo> a = controlaProcesso.pesquisaProcessos(sql, usuario);
+            ArrayList<Processo> a = controlaProcesso.pesquisaProcessos(sql, usuario, modo);
             if (a != null) {
                 for (Processo processo : a) {
-                    System.out.println(processo.mostraProcesso());
+                    System.out.println(processo.mostraProcesso(modo));
                 }
             }
             return;
@@ -149,9 +149,17 @@ public class ControlaComandos {
                 }*/
                 return;
             }
-
+            
+        }
+System.out.println("-----"+comando);
             if (comando.equalsIgnoreCase("DELETE")) {
-
+                System.out.println("entrou");
+                if(!controlaProcesso.excluiPocesso(montaExclusao(sql, usuario.getClasseSeguranca()))){
+                    System.out.println("-- ERRO AO EXECUTAR COMANDO!");
+                }else{
+                    System.out.println("SUCESSO!");
+                }
+                System.out.println("saiu");
                 return;
             }
 
@@ -167,8 +175,6 @@ public class ControlaComandos {
             }
 
             System.out.println("-- COMANDO NAO RECONHECIDO!");
-        }
-
     }
 
     //monta a cláusula select da pesquisa inserindo os atributos de segurança
@@ -193,13 +199,13 @@ public class ControlaComandos {
     }
 
     private String montaExclusao(String sql, ClasseSeguranca classeSeguranca) {
-        sql = sql /*+ " AND `C_numProcesso` <= "+classeSeguranca.getNum()
-                +" AND `C_nomeAutor` <= "+classeSeguranca.getNum()
-                +" AND `C_nomeReu` <= "+classeSeguranca.getNum()
-                +" AND `C_descricaoAuto` <= "+classeSeguranca.getNum()
-                +" AND `C_sentenca` <= "+classeSeguranca.getNum()*/
-                + " AND `TC` <= " + classeSeguranca.getNum() + "";
+        if (sql.toUpperCase().contains("WHERE")) {
+            sql += " AND TC <= " + classeSeguranca.getNum();
+        }else{
+            sql += " WHERE TC <= " + classeSeguranca.getNum();
+        }
 
+        System.out.println("----- " + sql);
         return sql;
     }
 
@@ -253,7 +259,7 @@ public class ControlaComandos {
 
     private String montaInsercao(String sql, ClasseSeguranca classeSeguranca) {
         System.out.println(sql);
-        sql = sql.replaceAll("\\);", "");
+        sql = sql.replaceAll("\\);", "").replaceAll("\\)", "");
         String[] a = sql.split("\\(");
         System.out.println("------------");
         System.out.println(sql);

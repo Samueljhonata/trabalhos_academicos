@@ -159,27 +159,52 @@ public class Processo {
         this.TC = ClasseSeguranca.retorna(max);
     }
 
-    public String mostraProcesso() {
+    public String mostraProcesso(TModo modo) {
         String retorno = "";
         
         
         retorno = "---------------------------------------------------------------------\n";
         if (C_numProcesso != null) {
-            retorno += "No. Processo: " + numProcesso + "(" + C_numProcesso.getCod() + ")\n";
+            retorno += "No. Processo: " + numProcesso;
+            if(modo == TModo.ANALITICO) {
+                retorno += "(" + C_numProcesso.getCod() + ")\n";
+            }else{
+                retorno += "\n";
+            }
         }
         if (C_nomeAutor != null) {
-            retorno += "Autor: " + nomeAutor + "(" + C_nomeAutor.getCod() + ")\n";
+            retorno += "Autor: " + nomeAutor;
+            if(modo == TModo.ANALITICO) {
+                retorno +="(" + C_nomeAutor.getCod() + ")\n";
+            }else{
+                retorno += "\n";
+            }
         }
         if (C_nomeReu != null) {
-            retorno += "Reu: " + nomeReu + "(" + C_nomeReu.getCod() + ")\n";
+            retorno += "Reu: " + nomeReu;
+            if(modo == TModo.ANALITICO) {
+                retorno +="(" + C_nomeReu.getCod() + ")\n";
+            }else{
+                retorno += "\n";
+            }
         }
         if (C_descricaoAuto != null) {
-            retorno += "Auto: " + descricaoAuto + "(" + C_descricaoAuto.getCod() + ")\n";
+            retorno += "Auto: " + descricaoAuto;
+            if(modo == TModo.ANALITICO) {
+                retorno +="(" + C_descricaoAuto.getCod() + ")\n";
+            }else{
+                retorno += "\n";
+            }
         }
         if (C_sentenca != null) {
-            retorno += "Sentenca: " + sentenca + "(" + C_sentenca.getCod() + ")\n";
+            retorno += "Sentenca: " + sentenca;
+            if(modo == TModo.ANALITICO) {
+                retorno +="(" + C_sentenca.getCod() + ")\n";
+            }else{
+                retorno += "\n";
+            }
         }
-        if (TC != null) {
+        if (TC != null && modo == TModo.ANALITICO) {
             retorno += "TC: " + TC;
         }
         return retorno;

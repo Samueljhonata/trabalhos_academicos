@@ -119,7 +119,7 @@ public class ProcessoDAO {
                 descricaoAuto, C_descricaoAuto,
                 sentenca, C_sentenca,
                 TC);*/
-        System.out.println(numProcesso+ C_numProcesso+ nomeAutor+ C_nomeAutor+  C_nomeReu+ C_descricaoAuto+C_sentenca+ TC);
+        //System.out.println(numProcesso+ C_numProcesso+ nomeAutor+ C_nomeAutor+  C_nomeReu+ C_descricaoAuto+C_sentenca+ TC);
         return new Processo(numProcesso, C_numProcesso, nomeAutor, C_nomeAutor, nomeReu, C_nomeReu, descricaoAuto, C_descricaoAuto, sentenca, C_sentenca, TC);
     }
 
