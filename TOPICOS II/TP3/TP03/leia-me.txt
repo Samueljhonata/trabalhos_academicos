@@ -1,0 +1,7 @@
+Para executar o programa é preciso abrir o terminar, ir até a pasta 'dist' e executar o comando:
+
+----------------------
+| java -jar TP03.jar |
+----------------------
+
+É fundamental que o banco de dados já esteja criado e o arquivo 'config' esteja configurado corretamente para que o programa possa funcionar.

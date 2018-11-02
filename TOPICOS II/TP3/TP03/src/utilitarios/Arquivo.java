@@ -1,17 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package utilitarios;
 
 import java.io.*;
 import java.util.*;
 
-/**
- *
- * @author Samuel
- */
 public class Arquivo {
 
     public ArrayList<String> lerArquivo(String nomeArq) throws Exception {

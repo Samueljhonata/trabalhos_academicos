@@ -1,6 +1,7 @@
 package modelo;
 
 public class Usuario {
+
     private String user;
     private String senha;
     private ClasseSeguranca classeSeguranca;
@@ -34,5 +35,5 @@ public class Usuario {
     public void setClasseSeguranca(ClasseSeguranca classeSeguranca) {
         this.classeSeguranca = classeSeguranca;
     }
-    
+
 }

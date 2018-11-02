@@ -1,9 +1,9 @@
-
 package modelo;
 
 import java.util.Objects;
 
 public class Processo {
+
     private String numProcesso;
     private ClasseSeguranca C_numProcesso;
     private String nomeAutor;
@@ -42,10 +42,9 @@ public class Processo {
         this.C_descricaoAuto = C_descricaoAuto;
         this.sentenca = sentenca;
         this.C_sentenca = C_sentenca;
-        
+
         verificaTC();
-        
-        
+
     }
 
     public String getNumProcesso() {
@@ -137,70 +136,69 @@ public class Processo {
         return TC;
     }
 
-    private void verificaTC(){
+    private void verificaTC() {
         //verifica se a classe de segurança da tupla deve ser alterada
         int max = 0;
-        if (this.C_numProcesso!=null && this.C_numProcesso.getNum() > max) {
+        if (this.C_numProcesso != null && this.C_numProcesso.getNum() > max) {
             max = this.C_numProcesso.getNum();
         }
-        if (this.C_nomeAutor!=null && this.C_nomeAutor.getNum() > max) {
+        if (this.C_nomeAutor != null && this.C_nomeAutor.getNum() > max) {
             max = this.C_nomeAutor.getNum();
         }
-        if (this.C_nomeReu!=null && this.C_nomeReu.getNum() > max) {
+        if (this.C_nomeReu != null && this.C_nomeReu.getNum() > max) {
             max = this.C_nomeReu.getNum();
         }
-        if (this.C_descricaoAuto!=null && this.C_descricaoAuto.getNum() > max) {
+        if (this.C_descricaoAuto != null && this.C_descricaoAuto.getNum() > max) {
             max = this.C_descricaoAuto.getNum();
         }
-        if (this.C_sentenca!=null && this.C_sentenca.getNum() > max) {
+        if (this.C_sentenca != null && this.C_sentenca.getNum() > max) {
             max = this.C_sentenca.getNum();
         }
-        
+
         this.TC = ClasseSeguranca.retorna(max);
     }
 
     public String mostraProcesso(TModo modo) {
         String retorno = "";
-        
-        
+
         retorno = "---------------------------------------------------------------------\n";
         if (C_numProcesso != null) {
             retorno += "No. Processo: " + numProcesso;
-            if(modo == TModo.ANALITICO) {
+            if (modo == TModo.ANALITICO) {
                 retorno += "(" + C_numProcesso.getCod() + ")\n";
-            }else{
+            } else {
                 retorno += "\n";
             }
         }
         if (C_nomeAutor != null) {
             retorno += "Autor: " + nomeAutor;
-            if(modo == TModo.ANALITICO) {
-                retorno +="(" + C_nomeAutor.getCod() + ")\n";
-            }else{
+            if (modo == TModo.ANALITICO) {
+                retorno += "(" + C_nomeAutor.getCod() + ")\n";
+            } else {
                 retorno += "\n";
             }
         }
         if (C_nomeReu != null) {
             retorno += "Reu: " + nomeReu;
-            if(modo == TModo.ANALITICO) {
-                retorno +="(" + C_nomeReu.getCod() + ")\n";
-            }else{
+            if (modo == TModo.ANALITICO) {
+                retorno += "(" + C_nomeReu.getCod() + ")\n";
+            } else {
                 retorno += "\n";
             }
         }
         if (C_descricaoAuto != null) {
             retorno += "Auto: " + descricaoAuto;
-            if(modo == TModo.ANALITICO) {
-                retorno +="(" + C_descricaoAuto.getCod() + ")\n";
-            }else{
+            if (modo == TModo.ANALITICO) {
+                retorno += "(" + C_descricaoAuto.getCod() + ")\n";
+            } else {
                 retorno += "\n";
             }
         }
         if (C_sentenca != null) {
             retorno += "Sentenca: " + sentenca;
-            if(modo == TModo.ANALITICO) {
-                retorno +="(" + C_sentenca.getCod() + ")\n";
-            }else{
+            if (modo == TModo.ANALITICO) {
+                retorno += "(" + C_sentenca.getCod() + ")\n";
+            } else {
                 retorno += "\n";
             }
         }
@@ -209,15 +207,15 @@ public class Processo {
         }
         return retorno;
     }
-    
+
     public String mostraProcessoF() {
-        return    "|  " + numProcesso + "(" + C_numProcesso.getCod() + ")\t|"
+        return "|  " + numProcesso + "(" + C_numProcesso.getCod() + ")\t|"
                 + "  " + nomeAutor + "(" + C_nomeAutor.getCod() + ")\t|"
                 + "  " + nomeReu + "(" + C_nomeReu.getCod() + ")\t|"
                 + "  " + descricaoAuto + "(" + C_descricaoAuto.getCod() + ")\t|"
                 + "  " + sentenca + "(" + C_sentenca.getCod() + ")\t|"
                 + "TC: " + TC + "\t|"
-                +"\n----------------------------------------------------------------------------------------";
+                + "\n----------------------------------------------------------------------------------------";
     }
 
     @Override
@@ -243,9 +241,6 @@ public class Processo {
         if (!Objects.equals(this.numProcesso, other.numProcesso)) {
             return false;
         }
-        /*if (this.TC != other.TC) {
-            return false;
-        }*/
         return true;
     }
 
@@ -253,6 +248,5 @@ public class Processo {
     public Processo clone() throws CloneNotSupportedException {
         return new Processo(numProcesso, C_numProcesso, nomeAutor, C_nomeAutor, nomeReu, C_nomeReu, descricaoAuto, C_descricaoAuto, sentenca, C_sentenca);
     }
-    
-    
+
 }

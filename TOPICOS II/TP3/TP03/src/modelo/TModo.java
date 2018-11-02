@@ -2,7 +2,7 @@ package modelo;
 
 public enum TModo {
     ANALITICO("ANALITICO"), USUAL("USUAL");
-    
+
     private String nome;
 
     private TModo(String nome) {
@@ -12,5 +12,5 @@ public enum TModo {
     public String getNome() {
         return nome;
     }
-    
+
 }

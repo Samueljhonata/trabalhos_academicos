@@ -25,10 +25,6 @@ public class Conexao {
         try {
             ArrayList<String> texto = arq.lerArquivo("config.txt");
 
-            for (int i = 0; i < texto.size(); i++) {
-                //System.out.println(texto.get(i));
-            }
-
             url = texto.get(0);
             nomeDB = texto.get(1);
             url += nomeDB;
@@ -44,16 +40,14 @@ public class Conexao {
     }
 
     public java.sql.Connection conectar() {
-        
+
         try {
 
             if (con != null) {
                 if (!con.isClosed()) {
-                    //System.out.println("JÁ CONECTADO");
                     return con;
                 }
             }
-            //System.out.println("Tentando conectar ao banco...");
             if (!configura()) {
                 System.err.println("ERRO ao conectar ao banco");
                 return null;
@@ -61,7 +55,6 @@ public class Conexao {
 
             Class.forName(driver);
             con = DriverManager.getConnection(url, user, password);
-            //System.out.println("Conectado!");
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
             System.out.println("Não foi possível encontrar o Driver!");
@@ -89,5 +82,5 @@ public class Conexao {
     public static String getNomeDB() {
         return nomeDB;
     }
-    
+
 }
