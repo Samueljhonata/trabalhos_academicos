@@ -200,7 +200,7 @@ public class ControlaComandos {
         select = select.replaceAll("descricaoAuto", " C_descricaoAuto, " + "descricaoAuto");
         select = select.replaceAll("sentenca", " C_sentenca, " + "sentenca");
 
-        retorno = select + " FROM " + quebra[1];
+        retorno = select + ", TC FROM " + quebra[1];
         return retorno;
 
     }
